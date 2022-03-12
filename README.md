@@ -6,4 +6,6 @@
 - [Authentication Server](./identity/)
 - [Resource Server](./product_api/)
 - [Client app: authorization-code type](./nuxt-client/)
-![demo video](./demo.mp4)
+
+https://user-images.githubusercontent.com/25036102/158018939-74d5fcd1-4186-4c98-8cfb-0342fef48e32.mp4
+
