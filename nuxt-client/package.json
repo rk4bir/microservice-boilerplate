@@ -1,0 +1,38 @@
+{
+  "name": "oauth2-nuxt-client-app",
+  "version": "1.0.0",
+  "description": "Oauth2 authorization-code type client example.",
+  "author": "rk4bir <r.kabir01@protonmail.com>",
+  "private": true,
+  "scripts": {
+    "dev": "nuxt",
+    "build": "nuxt build",
+    "start": "nuxt start",
+    "generate": "nuxt generate",
+    "lint": "eslint --ext .js,.vue --ignore-path .gitignore .",
+    "precommit": "npm run lint"
+  },
+  "dependencies": {
+    "axios": "^0.21.1",
+    "body-parser": "^1.19.0",
+    "bootstrap": "^4.6.0",
+    "bootstrap-vue": "^2.21.2",
+    "cookie-session": "^1.4.0",
+    "express": "^4.17.1",
+    "node-sass": "^5.0.0",
+    "nuxt": "^2.0.0",
+    "sass-loader": "^10.1.1",
+    "sqlite3": "^5.0.1",
+    "vue-gallery-slideshow": "^1.5.2",
+    "vue-lazyload": "^1.3.3",
+    "vue-typer": "^1.2.0",
+    "vuelidate": "^0.7.6"
+  },
+  "devDependencies": {
+    "babel-eslint": "^10.0.1",
+    "eslint": "^4.19.1",
+    "eslint-friendly-formatter": "^4.0.1",
+    "eslint-loader": "^2.1.1",
+    "eslint-plugin-vue": "^4.0.0"
+  }
+}

@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% load static %}
+{% load i18n %}
+
+{% block css %}
+<style>
+    a:hover { text-decoration: none }
+</style>
+{% endblock css %}
+
+{% block content %}
+    <div class="col-12 p-0">
+        <div class="block-center border p-4 bg-light">
+            <h3 class="block-center-heading mb-3 text-secondary">Applications</h3>
+            {% if applications %}
+                <ul class="list-group">
+                    {% for application in applications %}
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <a href="{{ application.get_absolute_url }}">
+                                <span class="ml-2">{{ application.name|capfirst }}</span>
+                            </a>
+                            <span class="text-muted">
+                                {{ application.created|date }}
+                            </span>
+                        </li>
+                    {% endfor %}
+                </ul>
+                <div class="text-right mt-4">
+                    <a class="btn btn-theme pl-3 pr-3 btn-sm"
+                       href="{% url 'oauth2:apps-register' %}"
+                    >
+                        <i class="fa fa-plus mr-1"></i>
+                        {% trans "New Application" %}
+                    </a>
+                </div>
+            {% else %}
+                <p>{% trans "No applications defined" %}. <a href="{% url 'oauth2:apps-register' %}">{% trans "Click here" %}</a> {% trans "if you want to register a new one" %}</p>
+            {% endif %}
+        </div>
+    </div>
+{% endblock content %}

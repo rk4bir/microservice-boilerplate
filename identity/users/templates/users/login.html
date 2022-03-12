@@ -1,0 +1,80 @@
+{% extends 'users/auth_base.html' %}
+{% load static %}
+
+{% block title %}
+    Identity Server | Sign In
+{% endblock title %}
+
+
+{% block content %}
+<div class="col-lg-6 offset-lg-3 col-md-8 offset-md-2 col-10 offset-1">
+    <div class="content-area mb-5" style="margin-top: 80px">
+         <h1 class="text-white">Sign In</h1>
+        <form method="post" action="{% url 'users:sign-in' %}">
+            <!--Form error-->
+            {% if form.errors %}
+                {% for field in form %}
+                    {% for error in field.errors %}
+                        <h5 class="text-light pt-3 pb-1">{{ error|escape }}</h5>
+                    {% endfor %}
+                {% endfor %}
+                {% for error in form.non_field_errors %}
+                    <h5 class="text-light pt-3 pb-1">{{ error|escape }}</h5>
+                {% endfor %}
+            {% else %}
+                <h5 class="text-light pt-3 pb-1 text-uppercase"></h5>
+            {% endif %}
+
+            {% csrf_token %}
+            <!--hidden next-->
+            <input type="hidden" hidden name="next" value="{{ next }}">
+            <!--Email field container-->
+            <div class="form-group pt-3">
+                {{ form.email }}
+            </div>
+            <!--Password field container-->
+            <div class="form-group pt-3">
+                {{ form.password }}
+                <div class="text-right mr-3 text-light" style="width: 30px!important; float: right; margin-top: -30px;">
+                    <i class="fa fa-eye" id="showHidePassword" style="cursor: pointer"></i>
+                </div>
+            </div>
+            <!--Submit button container-->
+            <div class="form-group mt-4">
+                <button
+                    type="submit"
+                    class="btn btn-theme auth-form-submit-button"
+                >
+                    <i class="fa fa-sign-in mr-2 d-none d-md-inline"></i>log in
+                </button>
+            </div>
+        </form>
+        <!--forgot password and sign up link-->
+        <div>
+            <a style="font-size: 13px" class="text-light" href="{% url 'users:password-recovery' %}?next={{ next }}">Forgot password?</a>
+            <hr class="border-light mt-1" style="width: 100px" />
+            <p class="text-uppercase text-white pt-2 auth-form-footer-text">
+                don’t have an account?
+                <a href="{% url 'users:sign-up' %}?next={{ next }}">create account</a>
+            </p>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+
+
+{% block js %}
+<script type="text/javascript">
+    let passwordShowHideToggler = document.getElementById('showHidePassword');
+    passwordShowHideToggler.addEventListener('click', function (e) {
+        e.preventDefault();
+        let p = document.getElementById('password');
+        let state = p.getAttribute('type');
+        if ( state == 'password' ) {
+            p.setAttribute('type', 'text');
+        } else {
+            p.setAttribute('type', 'password');
+        }
+    })
+</script>
+{% endblock js %}

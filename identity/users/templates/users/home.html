@@ -1,0 +1,163 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block css %}
+<style type="text/css" lang="css">
+    .side_nav .nav-item {
+        padding-top: 5px;
+        padding-bottom: 5px;
+        padding-left: 20px;
+        padding-right: 20px;
+        border-radius: 20px;
+    }
+    .side_nav .nav-item a {
+        color: #252F35
+    }
+    .side_nav .active {
+        background-color: #d8e4eb;
+    }
+
+    .card {
+        border-radius: 15px
+    }
+
+    input, select, textarea,
+    input:hover, select:hover, textarea:hover {
+        border-color: darkgrey!important;
+        box-shadow: none!important;
+        background: transparent!important;
+        border-radius: 15px!important;
+        color: grey!important
+    }
+
+    .form_photo {
+        height: 100px!important;
+        width: 100px!important;
+    }
+
+    .img-upload-input {
+        text-transform: capitalize!important;
+    }
+    .img-upload-input,
+    .img-upload-input:hover {
+        color: #252F35!important;
+        border: none!important;
+        outline: none!important;
+        overflow: hidden!important;
+        cursor: pointer;
+    }
+</style>
+{% endblock css %}
+
+{% block content %}
+<div class="col-lg-3 col-md-4 mb-5">
+    <h2>Settings</h2>
+    <ul class="nav d-block pt-2 side_nav">
+        <li class="nav-item {% if request.path == '/' %}active{% endif %} mb-2">
+            <a href="{% url 'users:home' %}" class="">Account</a>
+        </li>
+        <li class="nav-item {% if request.path == '/change-password/' %}active{% endif %}">
+            <a href="{% url 'users:change-password' %}" class="">Change password</a>
+        </li>
+    </ul>
+</div>
+
+<div class="col-lg-9 col-md-8 mb-5">
+    <div class="card shadow">
+        <div class="card-body">
+            <!--info update form-->
+            <form method="post" action="{% url 'users:home' %}" enctype="multipart/form-data">
+                <!--Form error-->
+                {% if form.errors %}
+                    <div class="text-right text-danger">
+                        {% for field in form %}
+                            {% for error in field.errors %}
+                                <h5 class="pb-3">{{ error|safe }}</h5>
+                            {% endfor %}
+                        {% endfor %}
+                        {% for error in form.non_field_errors %}
+                            <h5 class="pb-3">{{ error|safe }}</h5>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+
+                {% csrf_token %}
+<!--                <div class="image-container d-flex">-->
+<!--                    <img id="imgProfile" class="form_photo rounded-circle mb-3" src="{{ request.user.photo.url }}">-->
+<!--                    <div class="align-self-center">-->
+<!--                        <input-->
+<!--                            type="button"-->
+<!--                            class="text-primary font-weight-bold img-upload-input"-->
+<!--                            id="btnChangePicture"-->
+<!--                            value="Change"-->
+<!--                        />-->
+<!--                        {{ form.photo }}-->
+<!--                    </div>-->
+<!--                </div>-->
+                <!--Name fields container-->
+                <div class="form-group row">
+                    <div class="col-6 pr-1">{{ form.first_name }}</div>
+                    <div class="col-6 pl-1">{{ form.last_name }}</div>
+                </div>
+                <!--Email field container-->
+                <div class="form-group pt-3">
+                    {{ form.email }}
+                </div>
+                <!--Phone field container-->
+                <div class="form-group pt-3">
+                    {{ form.phone }}
+                </div>
+                <!--Submit button container-->
+                <div class="form-group pt-2 text-right">
+                    <button
+                        type="submit"
+                        class="btn btn-sm btn-secondary pl-3 pr-3 auth-form-submit-button"
+                        style="border-radius: 15px"
+                    >
+                        <i class="fa fa-send-o mr-2 d-none d-md-inline"></i>Save changes
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+
+
+{% block js %}
+<script type="text/javascript">
+    $(document).ready(function () {
+        $imgSrc = $('#imgProfile').attr('src');
+
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $('#imgProfile').attr('src', e.target.result);
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        $('#btnChangePicture').on('click', function () {
+            // document.getElementById('photo').click();
+            if (!$('#btnChangePicture').hasClass('changing')) {
+                $('#photo').click();
+            }
+            else {
+                // change
+                $('#btnChangePicture').removeClass('changing');
+                $('#btnChangePicture').attr('value', 'Change');
+                $('#imgProfile').attr('src', $imgSrc);
+                $('#photo').val('');
+            }
+        });
+
+        $('#photo').on('change', function () {
+            readURL(this);
+            $('#btnChangePicture').addClass('changing');
+            $('#btnChangePicture').attr('value', 'Remove');
+        });
+    });
+</script>
+{% endblock js %}

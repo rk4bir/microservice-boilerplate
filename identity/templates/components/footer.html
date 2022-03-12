@@ -1,0 +1,164 @@
+{% load static %}
+
+<div class="container-fluid bg-secondary footer">
+    <footer class="container">
+        <div class="row">
+            <!--logo and social icons-->
+            <div class="col-lg-4 mb-5 mt-5 pl-0">
+                <div class="footer-logo-container p-0 mb-3">
+                    <h1>Identity Server</h1>
+                </div>
+                <ul class="d-inline-flex mt-5 pl-3 footer-social-links">
+                    <li>
+                        <a target="_blank" href="#!">
+                            <img src="{% static 'icons/facebook.svg' %}" />
+                        </a>
+                    </li>
+                    <li class="pl-4 pr-4">
+                        <a target="_blank" href="#!">
+                            <img src="{% static 'icons/instagram.svg' %}" />
+                        </a>
+                    </li>
+                    <li>
+                        <a target="_blank" href="#!">
+                            <img src="{% static 'icons/twitter.svg' %}" />
+                        </a>
+                    </li>
+                    <li class="pl-4">
+                        <a target="_blank" href="#!">
+                            <img src="{% static 'icons/linkedin.svg' %}" />
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <!--links, contact, locations-->
+            <div class="col-lg-8 p-0 mt-5">
+                <ul class="text-white footer-social-links row p-0 rightContainer">
+                    <li class="col-md-4 mb-5">
+                        <h5 class="text-uppercase">Links</h5>
+                        <hr>
+                        <div class="footer-links">
+                            <a href="https://www.Identity Server.com/">Home</a>
+                            <br>
+                            <a href="https://www.Identity Server.com/about-us">About Us</a>
+                            <br>
+                            <a href="https://www.Identity Server.com/products">Products</a>
+                            <br>
+                            <a href="https://www.Identity Server.com/heavy-equipment-manufacturers">Manufacturers</a>
+                            <br>
+                            <a href="https://www.Identity Server.com/heavy-machinery-brands-we-work-with">Brands</a>
+                            <br>
+                            <a href="https://www.Identity Server.com/contact">Contact</a>
+                            <br>
+                            <a href="https://www.Identity Server.com/heavy-equipment-blog">Blog</a>
+                            <br>
+                            <a href="https://www.Identity Server.com/heavy-machinery-and-equipment-directory">
+                                Machinery directory
+                            </a>
+                        </div>
+                    </li>
+
+                    <li class="right-middle-link-li col-md-4 mb-5">
+                        <h5 class="text-uppercase">Locations</h5>
+                        <hr>
+                        <p>
+                            701 Tillery Street, Suite 12
+                            <br>
+                            Austin, TX, US 78702
+                            <br>
+                            <br>
+                            Ormeau Baths 18
+                            <br>
+                            Ormeau Baths Belfast BT2
+                            <br>
+                            8HS
+                        </p>
+                    </li>
+
+                    <li class="col-md-4">
+                        <h5 class="text-uppercase">Contact us</h5>
+                        <hr>
+                        <p>
+                            +1 (737) 443-6638
+                            <br>
+                            <br>
+                            info@Identity Server.com
+                        </p>
+                    </li>
+                </ul>
+            </div>
+
+            <!--copyright-->
+            <div class="col-12 mb-5 mt-5 copyright text-center">
+                &copy; all rights reserved Identity Server.com
+                <span id="copyRightYear"></span>
+                <script type="text/javascript">
+                    let el = document.getElementById('copyRightYear');
+                    let dt = new Date();
+                    el.innerHTML = dt.getFullYear();
+                </script>
+            </div>
+        </div>
+    </footer>
+</div>
+
+
+<style lang="css" type="text/css">
+footer, .footer {
+    bottom: 0px!important;
+    padding-top: 30px;
+    padding-bottom: 20px;
+}
+.footer-logo-container img {
+    height: 60px;
+}
+.footer-social-links li { list-style: none }
+.footer-social-links li a img { height: 20px }
+.footer-links a {
+    text-decoration: none;
+    color: white;
+    font-size: 14px
+}
+
+.footer-links a:hover {
+    color: #28a745;
+}
+
+h5 {
+    font-size: 16px
+}
+
+.right-middle-link-li {
+    padding-right: 20px!important;
+    padding-left: 20px!important;
+}
+@media only screen
+and (min-width: 0px)
+and (max-width: 767px) {
+    .right-middle-link-li {
+        padding-right: 14px!important;
+        padding-left: 14px!important;
+    }
+}
+
+
+.rightContainer { text-align: right; }
+.rightContainer li hr {
+    border: 1px solid #28a745;
+    margin-left: Calc(100% - 100px);
+}
+@media only screen
+and (min-width: 0px)
+and (max-width: 991px) {
+    .rightContainer li hr {
+         margin-left: 0px!important;
+         margin-right: Calc(100% - 100px);
+    }
+    .rightContainer, .rightContainer li { text-align: left!important }
+}
+
+.copyright {
+    color: grey;
+}
+</style>

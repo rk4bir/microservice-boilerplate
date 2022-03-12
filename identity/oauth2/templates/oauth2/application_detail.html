@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% load static %}
+{% load i18n %}
+{% block content %}
+    <div class="col-12 p-0">
+        <div class="row">
+            <div class="col-12">
+                <a class="btn text-muted font-weight-bold"
+                   href="{% url 'oauth2:apps' %}"
+                >
+                    <i class="fa fa-arrow-left mr-1"></i>Go Back
+                </a>
+            </div>
+            <div class="col-12 p-3 mt-3">
+                <table class="table table-bordered table-responsive table-hover">
+                    <tr>
+                        <th>{% trans "Application Name" %}</th>
+                        <td>{{ application.name }}</td>
+                    </tr>
+                    <tr>
+                        <th>{% trans "Client ID" %}</th>
+                        <td>{{ application.client_id }}</td>
+                    </tr>
+                    <tr>
+                        <th>{% trans "Client Secret" %}</th>
+                        <td>{{ application.client_secret }}</td>
+                    </tr>
+                    <tr>
+                        <th>{% trans "Client Type" %}</th>
+                        <td>{{ application.client_type }}</td>
+                    </tr>
+                    <tr>
+                        <th>{% trans "Authorization Grant Type" %}</th>
+                        <td>{{ application.authorization_grant_type }}</td>
+                    </tr>
+                    <tr>
+                        <th>{% trans "Redirect Uris" %}</th>
+                        <td>{{ application.redirect_uris }}</td>
+                    </tr>
+                </table>
+                <div class="text-center">
+                    <a class="btn btn-primary btn-sm"
+                       href="{% url 'oauth2:apps-update' application.pk %}"
+                    >
+                        <i class="fa fa-edit mr-1"></i>{% trans "Edit" %}
+                    </a>
+                    <a class="btn btn-danger btn-sm"
+                       href="{% url 'oauth2:apps-delete' application.pk %}"
+                    >
+                        <i class="fa fa-trash mr-1"></i>{% trans "Delete" %}
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

@@ -1,0 +1,119 @@
+{% load static %}
+<nav class="container-fluid bg-secondary shadow">
+    <div class="container p-0">
+        <!--Nav links-->
+        <div class="row p-2">
+            <!--Brand logo-->
+            <div class="col-6 p-0">
+                <a class="navbar-brand text-white" href="{% url 'users:home' %}">
+                    Identity Server
+                </a>
+            </div>
+            <!--Dropdown img-->
+            <div class="col-6 text-right p-0">
+                <ul class="navbar-nav">
+                    {% if request.user.is_authenticated %}
+                    <li class="nav-item dropdown navbar-right-links">
+                        <a
+                            class="nav-link text-white"
+                            href="#"
+                            id="navbarDropdown"
+                            role="button" data-toggle="dropdown"
+                            aria-haspopup="true"
+                            aria-expanded="false"
+                        >
+                            <i class="fa fa-bars"></i>
+                        </a>
+                        <div class="dropdown-menu top_nav_dropdown_menu bg-secondary" aria-labelledby="navbarDropdown">
+                            <!-- admin application section -->
+                            {% if request.user.is_superuser %}
+                                <a
+                                   class="dropdown-item"
+                                   href="{% url 'oauth2:apps' %}"
+                                >
+                                    <i class="fa fa-th-list mr-1"></i>Applications
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <a
+                                    class="dropdown-item"
+                                    href="{% url 'users:sign-out' %}"
+                                >
+                                    <i class="fa fa-sign-out mr-1"></i>Sign Out
+                                </a>
+                            {% else %}
+                                <a
+                                    class="dropdown-item"
+                                    href="{% url 'users:sign-out' %}"
+                                >
+                                    <i class="fa fa-sign-out mr-1"></i>Sign Out
+                                </a>
+                            {% endif %}
+                        </div>
+                    </li>
+                    {% else %}
+                    <!--link separator-->
+                    <li class="nav-item active">
+                        <a class="nav-link mt-2" href="{% url 'users:sign-in'  %}">
+                            <i class="fa fa-sign-in mr-2"></i>Sign In
+                        </a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</nav>
+
+
+
+<style type="text/css" lang="css">
+.logo { height: 60px }
+.dropdown-img { height: 45px }
+
+@media only screen
+and (min-width: 200px)
+and (max-width: 479px)
+{
+    .logo { height: 45px }
+    .dropdown-img { height: 35px }
+}
+@media only screen
+and (min-width: 480px)
+and (max-width: 767px)
+{
+    .logo { height: 50px }
+    .dropdown-img { height: 45px }
+}
+
+.top_nav_dropdown_menu {
+    margin-top: 30px!important;
+    z-index: 999;
+    right: 0px!important;
+    margin-left: calc(100% - 200px);
+}
+.top_nav_dropdown_menu:before {
+  position: absolute;
+  top: -8px;
+  right: 6px;
+  display: inline-block;
+  border-right: 8px solid transparent;
+  border-bottom: 8px solid #252F35;
+  border-left: 8px solid transparent;
+  border-bottom-color: rgba(0, 0, 0, 0.2);
+  content: '';
+}
+
+.top_nav_dropdown_menu:after {
+  position: absolute;
+  top: -7px;
+  right: 6px;
+  display: inline-block;
+  border-right: 7px solid transparent;
+  border-bottom: 7px solid #252F35;
+  border-left: 7px solid transparent;
+  content: '';
+}
+.top_nav_dropdown_menu a { color: white!important; }
+.top_nav_dropdown_menu a:hover{ color: #28a745!important; }
+.top_nav_dropdown_menu a:focus { color: white!important; }
+</style>

@@ -1,0 +1,204 @@
+<!DOCTYPE html>{% load static %}
+<html lang="en">
+<head>
+    <!--Required meta tags-->
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <!--icon-->
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'favicon.ico' %}"/>
+    <link rel="shortcut icon" type="image/ico" href="{% static 'favicon.ico' %}"/>
+
+    {% block base_css %}
+        <link rel="stylesheet" href="{% static 'css/base.css' %}" />
+        <script src="{% static 'css/base.js' %}"></script>
+        <script src="{% static 'vendors/fa/fa.min.js' %}"></script>
+        <link rel="stylesheet" href="{% static 'css/style.css' %}"/>
+        <!--auth css-->
+        <style type="text/css" lang="css">
+            input, select, textarea,
+            input:hover, select:hover, textarea:hover {
+                border-color: darkgrey!important;
+                box-shadow: none!important;
+                background: transparent!important;
+                border-radius: 15px!important;
+                color: darkgrey!important
+            }
+            .main-container, .img-container {
+                border-bottom: 10px solid #252F35;
+                margin-bottom: 0px;
+                overflow: hidden!important;
+            }
+            .img-container, .img-container img {
+                height: 100vh;
+            }
+            .img-container {
+                background-repeat: no-repeat;
+                background-position: center;
+                background-position: fixed;
+                background-size: cover;
+                filter:blur(5px);
+                -o-filter:blur(5px);
+                -ms-filter:blur(5px);
+                -moz-filter:blur(5px);
+                -webkit-filter:blur(5px);
+                backdrop-filter: sepia();
+                -webkit-backdrop-filter: sepia();
+            }
+            .img-container img {
+                width: 100vw;
+            }
+            .main-container {
+                background: rgba(0,0,0,0.4);
+                background-size: cover;
+                position: absolute;
+                left: 0;
+                top: 0;
+                right: 0;
+                bottom: 0;
+                height: 100vh;
+            }
+            .content-area {
+                z-index: 10;
+                text-align: center;
+                filter: opacity(0.85);
+                background: #252F35;
+                padding-left: 60px;
+                padding-right: 60px;
+                padding-top: 40px;
+                padding-bottom: 20px;
+                border-radius: 10px;
+            }
+            .auth-link {
+                font-size: 16px;
+                text-decoration: none;
+                border: 2px solid #28a745;
+                border-radius: 7px;
+                padding-left: 15px;
+                padding-right: 15px;
+                padding-top: 7px;
+                padding-bottom: 7px;
+            }
+            .auth-link img {
+                height: 14px;
+                margin-left: 3px
+            }
+            .auth-link:hover {
+                color: #28a745;
+            }
+            .auth-form-footer-text {
+                font-size: 13px!important;
+            }
+            .auth-form-submit-button {
+                padding-left: 50px; padding-right: 50px
+            }
+            @media only screen and
+            (min-width: 200px) and
+            (max-width: 575px)
+            {
+                .content-area h1 { font-size: 1.4rem!important }
+                .auth-link {
+                    font-size: 14px;
+                    padding-right: 10px;
+                    padding-left: 10px;
+                    padding-top: 5px;
+                    padding-bottom: 7px;
+                }
+                .auth-link img { height: 12px; }
+                .content-area {
+                    padding-left: 30px;
+                    padding-right: 30px;
+                    padding-top: 30px;
+                    padding-bottom: 20px;
+                    border-radius: 10px;
+                }
+                .auth-form-footer-text {
+                    font-size: 10px!important;
+                }
+                .auth-form-submit-button {
+                    padding-left: 30px; padding-right: 30px
+                }
+            }
+            @media only screen and
+            (min-width: 576px) and
+            (max-width: 767px)
+            {
+                .content-area h1 { font-size: 2rem }
+                .content-area {
+                    padding-left: 50px;
+                    padding-right: 50px;
+                    padding-top: 30px;
+                    padding-bottom: 20px;
+                    border-radius: 10px;
+                }
+                .auth-form-submit-button {
+                    padding-left: 40px; padding-right: 40px
+                }
+            }
+            @media only screen and
+            (min-width: 290px) and
+            (max-width: 554px)
+            {
+                .content-area h1 { font-size: 2rem }
+            }
+        </style>
+    {% endblock base_css %}
+
+    <!--Extra css-->
+    {% block css %}{% endblock css %}
+
+    <!--Title-->
+    <title>
+        {% block title %}
+            Identity Server: All of your heavy machinery needs in one place.
+        {% endblock title %}
+    </title>
+</head>
+<body>
+    <!--main content-->
+    {% block main %}
+    <main class="main_container">
+        <!--bg img-->
+        <div class="img-container p-0 m-0">
+            {% block bg_img %}
+                <img src="{% static 'img/auth-bg.jpeg' %}">
+            {% endblock bg_img %}
+        </div>
+
+        <div class="main-container p-o m-0">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 pt-4">
+                        {% block back_to_link %}
+                            <a href="/" style="font-size: 14px" class="text-uppercase text-white">
+                                <i class="fa fa-arrow-left mr-2"></i>
+                                back to website
+                            </a>
+                        {% endblock back_to_link %}
+                    </div>
+                    {% include 'components/session_message.html' %}
+
+                    {% block content %} {% endblock content %}
+                </div>
+            </div>
+        </div>
+    </main>
+    {% endblock main %}
+
+    <!--footer-->
+    {% block footer %}
+
+    {% endblock footer %}
+
+    <!--Scripts-->
+    {% block base_js %}
+        <script src="{% static 'vendors/jquery/jquery.min.js' %}"></script>
+    {% endblock base_js %}
+
+    <!--Extra js-->
+    {% block js %}{% endblock js %}
+</body>
+</html>

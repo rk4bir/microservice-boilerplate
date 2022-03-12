@@ -1,0 +1,39 @@
+body { scroll-behavior: smooth }
+.nav-link { font-size: 1.1rem }
+.navbar-brand { font-size: 1.6rem }
+
+
+input, select, textarea,
+input:hover, select:hover, textarea:hover {
+    border-color: #28a745!important;
+    box-shadow: none!important;
+}
+
+#navbarLinks .nav-link {
+    color: #696458 !important;
+    font-weight: bold;
+}
+
+/* fonts */
+@font-face {
+    font-family: "Lato";
+    src: local("Lato"),
+        url(./fonts/Lato/Lato-Regular.ttf) format("truetype");
+}
+
+@font-face {
+    font-family: "Lato-thin";
+    src: local("Lato"),
+        url(./fonts/Lato/Lato-ThinItalic.ttf) format("truetype");
+}
+
+
+@font-face {
+    font-family: "Lato-bold";
+    src: local("Lato"),
+        url(./fonts/Lato/Lato-BoldItalic.ttf) format("truetype");
+}
+
+a, a:hover {
+    text-decoration: none!important
+}

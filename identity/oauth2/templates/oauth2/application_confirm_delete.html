@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+{% block content %}
+    <div class="col-12 p-0">
+        <h3 class="text-center mt-5">
+            Are you sure to delete the application
+            {{ application.name }}?
+        </h3>
+        <form method="post" action="{% url 'oauth2:apps-delete' application.pk %}">
+            {% csrf_token %}
+            <div class="control-group text-center">
+                <div class="form-group mt-3">
+                    <a class="btn btn-success"
+                       href="{% url 'oauth2:apps' %}"
+                    >
+                        Cancel
+                    </a>
+                    <input type="hidden" hidden class="btn btn-danger btn-sm" name="allow" value="Delete"/>
+                    <button type="submit" class="btn btn-danger">
+                        Delete
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+{% endblock content %}

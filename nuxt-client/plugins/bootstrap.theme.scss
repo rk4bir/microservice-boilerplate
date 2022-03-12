@@ -1,0 +1,72 @@
+$primary: #28a745;
+$secondary: #343f46;
+$greenBorder: #28a745;
+$redBorder: #dc3545;
+
+@font-face {
+    font-family: "Lato";
+    src: local("Lato"),
+        url(./fonts/Lato/Lato-Regular.ttf) format("truetype");
+}
+
+@font-face {
+    font-family: "Lato-thin";
+    src: local("Lato"),
+        url(./fonts/Lato/Lato-ThinItalic.ttf) format("truetype");
+}
+
+
+@font-face {
+    font-family: "Lato-bold";
+    src: local("Lato"),
+        url(./fonts/Lato/Lato-BoldItalic.ttf) format("truetype");
+}
+
+
+// Then import Bootstrap an BootstrapVue SCSS files (order is important)
+@import 'node_modules/bootstrap/scss/bootstrap.scss';
+@import 'node_modules/bootstrap-vue/src/index.scss';
+
+
+/* override */
+
+select, input, input[type='file'] {
+    border-radius: 7px!important;
+    height: 45px!important;
+    box-shadow: none!important;
+    border-color: $primary!important;
+}
+
+input:hover {
+    box-shadow: none!important;
+}
+
+.btn-theme, .btn-theme:hover {
+    border-radius: 15px!important;
+    background-color: $primary;
+    border-color: $primary;
+    color: #ffffff;
+    text-transform: uppercase;
+}
+
+.btn-outline-theme, .btn-outline-theme:hover {
+    border-radius: 5px!important;
+    background: transparent!important;
+    border-color: $primary;
+    color: $secondary;
+    text-transform: uppercase;
+}
+
+/* custom colors */
+.bg-theme-light {
+    background: #b9b9b9;
+}
+
+/* form validation override */
+.is-invalid {
+    border-color: $redBorder!important;
+}
+
+.is-valid {
+    border-color: $greenBorder!important;
+}

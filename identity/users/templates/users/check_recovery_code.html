@@ -1,0 +1,110 @@
+{% extends 'users/auth_base.html' %}
+{% load static %}
+
+{% block title %}
+    Identity Server | Reset password
+{% endblock title %}
+
+
+{% block css %}
+<style type="text/css" lang="css">
+    .main-container, .img-container {
+        border: none;
+        overflow: hidden!important;
+    }
+
+    .form-header h5 { font-size: 22px }
+    .form-header p { font-size: 14px }
+
+    @media only screen and
+    (min-width: 100px) and
+    (max-width: 399px) {
+        .form-header h5 { font-size: 16px }
+        .form-header p { font-size: 12px }
+    }
+    @media only screen and
+    (min-width: 400px) and
+    (max-width: 567px) {
+        .form-header h5 { font-size: 18px }
+        .form-header p { font-size: 12px }
+    }
+</style>
+{% endblock css %}
+
+
+{% block back_to_link %}
+    <a href="{% url 'users:password-recovery' %}?next={{ next }}" style="font-size: 14px" class="text-uppercase text-white">
+        <i class="fa fa-arrow-left mr-2"></i>
+        back to passord reset
+    </a>
+{% endblock back_to_link %}
+
+{% block bg_img %}
+    <img src="{% static 'password-cover.jpeg' %}">
+{% endblock bg_img %}
+
+
+{% block content %}
+<div class="col-lg-6 offset-lg-3 col-md-8 offset-md-2 col-10 offset-1">
+    <div class="content-area mt-5 mb-5 pb-5">
+        <!-- <h1>Administration</h1> -->
+        <img class="img-fluid mb-4" src="{% static 'logo.svg' %}" />
+        <div class="p-3 form-header">
+            <h5 class="text-white pb-1 text-uppercase">Enter Code</h5>
+            <hr style="" class="border border-primary">
+            <p class="text-light">
+                {{ message }}
+            </p>
+        </div>
+        <form method="post" action="{{ pr.get_code_check_url }}">
+            {% csrf_token %}
+            <!--hidden next-->
+            <input type="hidden" hidden name="next" value="{{ next }}">
+            <!--Email field container-->
+            <div class="form-group">
+                <input
+                    id="code"
+                    name="code"
+                    placeholder="Enter 6 digits code"
+                    onblur="this.placeholder='Enter 6 digits code'"
+                    onfocus="this.placeholder=''"
+                    class="form-control"
+                    autocomplete='off'
+                />
+            </div>
+            <!--Submit button container-->
+            <div class="form-group mt-5">
+                <button
+                    type="submit"
+                    class="btn btn-theme auth-form-submit-button"
+                >
+                    Submit
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock content %}
+
+
+{% block footer %}{% endblock footer %}
+
+
+
+{% block js %}
+<script type="text/javascript">
+    var passwordShowing = false;
+    let passwordShowHideToggler = document.getElementById('showHidePassword');
+    passwordShowHideToggler.addEventListener('click', function (e) {
+        e.preventDefault();
+        passwordShowing = !passwordShowing;
+        if ( passwordShowing ) {
+            $('#new_password').attr('type', 'text');
+            $('#confirm_password').attr('type', 'text');
+        } else {
+            $('#new_password').attr('type', 'password');
+            $('#confirm_password').attr('type', 'password');
+        }
+    })
+</script>
+{% endblock js %}
