@@ -1,4 +1,4 @@
-# Service: Identity
+# Service: Product API
 > ::Resource server::
 
 
