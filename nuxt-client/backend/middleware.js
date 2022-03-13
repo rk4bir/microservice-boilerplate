@@ -25,7 +25,7 @@ function tokenRenew (req, res, next) {
     let username = req.session.user
     console.log(`tokenRenew -> username: ${username}`);
     if (username) {
-        cursor.getTokens(username, (dbData) => {
+        cursor.getTokens(username, async (dbData) => {
             // if user not found in the db then return error
             if (!dbData) {
                 console.log('tokenRenew: token is not found in sqlite3')
@@ -33,49 +33,46 @@ function tokenRenew (req, res, next) {
                 req.session.user = null
             } else {
                 let headers = {'Authorization': `Bearer ${dbData.accessToken}`}
-                axios.get(`${AUTH_HOST}/api/users/me`, { headers })
-                    .then(response => {
-                        // token still valid
-                        console.log('tokenRenew: Token is still valid')
-                    })
-                    .catch(err => {
-                        // token expired, renew with a request
-                        let body = {
-                            "refresh_token": dbData.refreshToken,
-                            "grant_type": "refresh_token",
-                            "client_id": client_id,
-                            "client_secret": client_secret,
-                            "redirect_uri": redirect_uri
-                        }
-                        axios.post(token_uri, body)
-                            .then(r => {
-                                var _token = r.data
-                                // fetch user info
-                                let headers = {'Authorization': `Bearer ${_token.access_token}`}
-                                axios.get(`${AUTH_HOST}/api/users/me/`, { headers })
-                                    .then(response => {
-                                        let user = response.data
-                                        if ( user.user_type == 'user' || user.user_type == 'admin') {
-                                            cursor.InsertTokens(user.username, _token.refresh_token, _token.access_token)
-                                            console.log('tokenRenew: Token renewed')
-                                        } else {
-                                            // unset session.user
-                                            req.session.user = null
-                                            console.log('tokenRenew: invalid user')
-                                        }
-                                    })
-                                    .catch(err => {
-                                        // unset session.user
-                                        req.session.user = null
-                                        console.log('tokenRenew: permission denied')
-                                    })
-                            })
-                            .catch(err => {
+                const user_resp = await axios.get(`${AUTH_HOST}/api/users/me`, { headers })
+                
+                if (user_resp.status == 200) {
+                    // token still valid
+                    console.log('tokenRenew: Token is still valid')
+                } else {
+                    let body = {
+                        "refresh_token": dbData.refreshToken,
+                        "grant_type": "refresh_token",
+                        "client_id": client_id,
+                        "client_secret": client_secret,
+                        "redirect_uri": redirect_uri
+                    }
+                    const token_resp = await axios.post(token_uri, body)
+                    if ( token_resp.status == 200 ) {
+                        var _token = r.data
+                        // fetch user info
+                        let headers = {'Authorization': `Bearer ${_token.access_token}`}
+                        let usr_resp = await axios.get(`${AUTH_HOST}/api/users/me/`, { headers })
+                        if ( usr_resp.status == 200 ) {
+                            let user = usr_resp.data
+                            if ( user.user_type == 'user' || user.user_type == 'admin') {
+                                cursor.InsertTokens(user.username, _token.refresh_token, _token.access_token)
+                                console.log('tokenRenew: Token renewed')
+                            } else {
                                 // unset session.user
                                 req.session.user = null
-                                console.log('tokenRenew: invalid request')
-                            })
-                    })
+                                console.log('tokenRenew: invalid user')
+                            }
+                        } else {
+                            // unset session.user
+                            req.session.user = null
+                            console.log('tokenRenew: permission denied')
+                        }
+                    } else {
+                        // unset session.user
+                        req.session.user = null
+                        console.log('tokenRenew: invalid request')
+                    }
+                }
             }
         })
     }

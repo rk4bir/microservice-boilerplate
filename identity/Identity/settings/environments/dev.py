@@ -1,7 +1,14 @@
-import os
 import logging.config
-
+from environ import Env
 from ..common import *
+
+# config env
+ENV_FILE = os.path.join(BASE_DIR, '.env.dev')
+env = Env()
+env.read_env(ENV_FILE)
+
+
+SECRET_KEY = env("SECRET_KEY", default="<secretKey>")
 
 
 # Database
@@ -58,7 +65,7 @@ AUTHENTICATION_BACKENDS = (
 
 # Logging config
 LOGGING_CONFIG = None
-LOGLEVEL = os.getenv('DJANGO_LOGLEVEL', 'info').upper()
+LOGLEVEL = env('DJANGO_LOGLEVEL', default='info').upper()
 logging.config.dictConfig({
     'version': 1,
     'disable_existing_loggers': False,

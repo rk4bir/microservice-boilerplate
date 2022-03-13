@@ -1,7 +1,17 @@
 import os
+import sys
 import logging.config
-
+from environ import Env
 from ..common import *
+
+# Config env file
+env = Env()
+ENV_FILE = os.path.join(BASE_DIR, '.env.dev')
+env.read_env(ENV_FILE)
+
+
+# secret key
+SECRET_KEY = env("SECRET_KEY")
 
 
 # Database
@@ -24,8 +34,14 @@ STATICFILES_DIRS = [
 
 
 # oAuth2 provider config
-client_id = 'qEQ6ZmJHkDFOlPRmH2JxL0jcKLniU8Bb1Pfi0ccz'
-client_secret = 'BgvFEHQqkMhhLqpZAN7f294L4DtlagqzyGMNxQiS6EskzxMpLVJhxGg7DEHzAyLHPY32EHypdgwvOwDuvEisLaDTnFF9XMAOAbMsgOyQp4J9VcroRapEyQDqz4tU1R0V'
+CLIENT_ID = env("CLIENT_ID", default=None)
+CLIENT_SECRET = env("CLIENT_SECRET", default=None)
+RESOURCE_SERVER_INTROSPECTION_URL = env("RESOURCE_SERVER_INTROSPECTION_URL", default=None)
+
+if not CLIENT_ID or not CLIENT_SECRET or not RESOURCE_SERVER_INTROSPECTION_URL:
+    print("CLIENT_ID, CLIENT_SECRET, RESOURCE_SERVER_INTROSPECTION_URL are missing!!!")
+    sys.exit(0)
+
 OAUTH2_PROVIDER = {
     'SCOPES': {
         'read': 'Read scope',
@@ -33,8 +49,8 @@ OAUTH2_PROVIDER = {
         'edit': 'Edit scope',
         'introspection': 'Introspect token scope',
     },
-    'RESOURCE_SERVER_INTROSPECTION_URL': 'http://127.0.0.1:8000/oauth2/introspect/',
-    'RESOURCE_SERVER_INTROSPECTION_CREDENTIALS': (client_id, client_secret)
+    'RESOURCE_SERVER_INTROSPECTION_URL': RESOURCE_SERVER_INTROSPECTION_URL,
+    'RESOURCE_SERVER_INTROSPECTION_CREDENTIALS': (CLIENT_ID, CLIENT_SECRET)
 }
 
 REST_FRAMEWORK = {
@@ -52,7 +68,7 @@ REST_FRAMEWORK = {
 
 # Logging config
 LOGGING_CONFIG = None
-LOGLEVEL = os.getenv('DJANGO_LOGLEVEL', 'info').upper()
+LOGLEVEL = env('DJANGO_LOGLEVEL', default='info').upper()
 logging.config.dictConfig({
     'version': 1,
     'disable_existing_loggers': False,

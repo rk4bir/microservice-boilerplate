@@ -1,0 +1,65 @@
+version: "3.8"
+
+services:
+  identity-server:
+    restart: always
+    build:
+      context: ./identity
+      dockerfile: Dockerfile
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - ./identity/:/app
+      - identity_server_static_volume:/app/static
+      - identity_server_media_volume:/app/media
+    ports:
+      - "8000:8000"
+    networks:
+      - microservice_network
+  products-api:
+    restart: always
+    build:
+      context: ./product_api
+      dockerfile: Dockerfile
+    command: python manage.py runserver 0.0.0.0:8001
+    volumes:
+      - ./product_api/:/app
+      - products_api_static_volume:/app/static
+      - products_api_media_volume:/app/media
+    ports:
+      - "8001:8001"
+    depends_on:
+      - "identity-server"
+    networks:
+      - microservice_network
+  web-client:
+    build: 
+      context: ./nuxt-client
+      dockerfile: Dockerfile
+    environment:
+      - PORT=3001
+      - HOST=0.0.0.0
+    restart: always
+    command: yarn dev
+    ports:
+      - "3001:3001"
+    volumes: 
+      - ./nuxt-client/:/app
+      - web_client_node_modules:/app/node_modules/
+    depends_on:
+      - "identity-server"
+      - "products-api"
+    networks:
+      - microservice_network
+volumes:
+  identity_server_static_volume:
+  identity_server_media_volume:
+  products_api_static_volume:
+  products_api_media_volume:
+  web_client_node_modules:
+
+networks:
+  microservice_network:
+    # use the bridge driver, but enable IPv6
+    driver: bridge
+    driver_opts:
+      com.docker.network.enable_ipv6: "true"

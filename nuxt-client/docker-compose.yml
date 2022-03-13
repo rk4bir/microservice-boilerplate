@@ -1,0 +1,18 @@
+version: "3.8"
+services:
+  web-client:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - PORT=3001
+      - HOST=0.0.0.0
+    restart: always
+    command: yarn dev
+    ports:
+      - "3001:3001"
+    volumes: 
+      - ./:/app
+      - node_modules:/app/node_modules/
+volumes:
+  node_modules:

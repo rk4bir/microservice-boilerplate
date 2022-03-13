@@ -10,6 +10,7 @@ router.get('/list', async (req, res) => {
     let username = req.session.user
     cursor.getTokens(username, (r) => {
         // if user not found in the db then return error
+        console.log(`/api/product/list -> db token:`, r);
         if (r == null) {
             res.json({'error': "Invalid token"})
         } else {
