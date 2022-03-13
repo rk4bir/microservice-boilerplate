@@ -11,16 +11,23 @@
 - [x] Database: **`SQLite3`**
 
 
-### Create activate and install dependencies
-```shell
-user@host[identity]: virtualenv -p /usr/bin/python3 venv
-user@host[identity]: source venv/bin/activate
-(venv) user@host[identity]: pip install -U pip
-(venv) user@host[identity]: pip install -r requirements.txt
+
+### Setup with `virtualenv`
+```bash
+# Create activate and install dependencies
+$ virtualenv -p /usr/bin/python3 venv
+$ source venv/bin/activate
+$ pip install -U pip
+$ pip install -r requirements.txt
+
+# Migrate database and run the dev server
+$ python manage.py migrate
+$ python manage.py runserver
 ```
 
-### Migrate database and run the dev server
-```shell
-(venv) user@host[identity]: python manage.py migrate
-(venv) user@host[identity]: python manage.py runserver
+
+
+### Setup with `docker`
+```bash
+$ docker-compose up --build
 ```
