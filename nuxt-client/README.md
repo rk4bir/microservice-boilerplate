@@ -2,7 +2,7 @@
 
 > Oauth2 authorization-code type client example.
 
-## Build Setup
+## Setup manually
 
 ``` bash
 # install dependencies
@@ -18,5 +18,8 @@ $ yarn start
 # generate static project
 $ yarn generate
 ```
-
+## Setup with docker
+```bash
+$ docker-compose up --build
+```
 For detailed explanation on how things work, checkout the [Nuxt.js docs](https://github.com/nuxt/nuxt.js).
